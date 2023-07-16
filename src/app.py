@@ -1,26 +1,19 @@
 import streamlit as st
+from resources import TAGS_LIST
+from features.playlist_generator import PlaylistGenerator
 
 st.title('Music Recommendations')
+
+user_id = st.text_input('User id')
+st.text(f"Hello {user_id}")
+
+
 n_songs = st.slider("How many songs would you like on your playlist?", min_value=1, max_value=50, value=30)
 
+tags = st.multiselect('Tags', TAGS_LIST)
 
-mood = st.multiselect('Mood', ['happy', 'sad', 'angry'])
-mood_impact = st.slider("How much should mood impact your playlist?", min_value=1, max_value=100, value=50)
+show_playlist = st.button('Create playlist')
 
-
-situation = st.multiselect('Situation', ['Party', 'Gym', 'Deep focus', 'In the background'])
-situation_impact = st.slider("How much should situation impact your playlist?", min_value=1, max_value=100, value=50)
-
-tempo = st.selectbox('Tempo', ['Fast', 'Medium', 'Slow'])
-tempo_impact = st.slider("How much should tempo impact your playlist?", min_value=1, max_value=100, value=50)
-
-key_sounds = st.multiselect('Key sounds', ['guitar', 'male voice', 'female voice', 'piano'])
-key_sounds_impact = st.slider("How much should key_sounds impact your playlist?", min_value=1, max_value=100, value=50)
-
-similar_users = st.checkbox('I want songs listened by similar users to be included')
-similar_users_impact = st.slider("How much should similar users impact your playlist?", min_value=1, max_value=100, value=50)
-
-top_hits = st.checkbox('I want most listened songs to be included')
-top_hits_impact = st.slider("How much should top hits impact your playlist?", min_value=1, max_value=100, value=50)
-
-st.button('Create playlist')
+if show_playlist:
+    playlist_generator = PlaylistGenerator(tags, user_id, n_songs)
+    st.text(playlist_generator.get_predictions())

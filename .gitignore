@@ -89,3 +89,5 @@ venv/
 
 # Mypy cache
 .mypy_cache/
+
+src/features/client_secret.json
