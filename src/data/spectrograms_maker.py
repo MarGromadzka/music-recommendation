@@ -22,13 +22,13 @@ if __name__ == "__main__":
         try:
             mp3_audio = AudioSegment.from_file(external_disk_path + f"/{file}.mp3", format="mp3")  # read mp3
         except Exception as e:
-            pass
+            continue
 
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=True) as tmpfile:
             mp3_audio.export(tmpfile.name, format="wav")
             audio, sr = librosa.load(tmpfile.name, sr=44100)
 
-        for i in range(0, floor(audio.size/(sr*fragment_length))):
+        for i in range(0, floor(audio.size/(sr * fragment_length))):
             start = sr*i*fragment_length
             stop = sr*(i+1)*fragment_length
             fragment = audio[start:stop]

@@ -1,6 +1,6 @@
 import streamlit as st
 from resources import TAGS_LIST
-from features.playlist_generator import PlaylistGenerator
+from features.PlaylistGenerator import PlaylistGenerator
 
 st.title('Music Recommendations')
 

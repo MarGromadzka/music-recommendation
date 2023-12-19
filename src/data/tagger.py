@@ -20,6 +20,6 @@ if __name__ == "__main__":
             print(length)
             df.loc[length] = [file] + [max(taggram[:, i]) for i in range(0, len(columns_names) - 1)]
     except Exception:
-        df.to_csv("../../data/processed/tagged_music.csv")
+        df.to_csv("../../data/processed/tagged_music_v2.csv")
 
-    df.to_csv("../../data/processed/tagged_music.csv")
+    df.to_csv("../../data/processed/tagged_music_v2.csv")
