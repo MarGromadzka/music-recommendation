@@ -1,9 +1,10 @@
 import pandas as pd
+import re
 
 class ALSReader:
 
     def __init__(self, user_id):
-        self.user_id = user_id
+        self.user_id = re.split(r'\D+', user_id)[0]
         self.predictions = pd.read_pickle("data/processed/ALSpredictions.pkl")
 
 
