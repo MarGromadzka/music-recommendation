@@ -9,7 +9,7 @@ def train_model(model, device, optimizer, criterion, tags_list, epochs):
     for epoch in range(epochs):
         for index in range(4, 180):
             img_path = f"/content/sorted_spec/content/drive/MyDrive/musicrecom/sorted_spectrograms/{index}/"
-            tags_path = f"/content/drive/MyDrive/musicrecom/melodice/tags/tagged_music_after_drop_{index}.csv"
+            tags_path = f"/content/drive/MyDrive/musicrecom/melodice/tags_trimmed/tagged_music_after_drop_{index}.csv"
             train_dataset = CustomImageDataset(tags_path, img_path, tags_list)
             train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
             for i, data in enumerate(train_loader, 0):
@@ -63,7 +63,12 @@ def save_metrics(params, tp, tn, fp, fn, dir_path):
     params["accuracy"] = (tp + tn) / (tp + tn + fp + fn)
     params["precision"] = tp / (tp + fp)
     params["recall"] = tp / (tp + fn)
+    params["specificity"] = tn / (fp + tn)
+    params["fall-out"] = fp / (fp + tn)
+    params["false neg rate"] = fn / (tp + fn)
+    params["neg pred value"] = tn / (fn + tn)
+    params["false discovery rate"] = fp / (fp + tp)
+    params["f measure"] = 2 * params["precision"] * params["recall"] / (params["precision"] + params["recall"])
     params_str = {key: str(params[key]) for key in params.keys()}
-    df = pd.DataFrame(params_str, index=[0])
-    df.to_csv(dir_path + str(time.time()) + ".csv")
-
+    params = pd.DataFrame(params_str, index=[0])
+    params.to_csv(dir_path + str(time.time()) + ".csv")
