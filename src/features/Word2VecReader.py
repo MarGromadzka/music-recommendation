@@ -14,6 +14,7 @@ class Word2VecReader:
             return [user[0] for user in self.wv.most_similar(positive=[self.user_id])[0:3]]
         except KeyError:
             return []
+
     def get_songs(self):
         similar_users = self._get_similar_users()
         similar_songs = []
